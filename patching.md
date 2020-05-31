@@ -43,7 +43,62 @@ It should end up looking something like this.
 
 That is it! 
 
+
 You can find more examples in the [CCAssetsSwaps](https://github.com/CCDirectLink/CCAssetSwaps/) repo.
 
 * Used faceless Lea mod for some of the demonstration
 
+# JSON Patching (Object Patching)
+
+Note: This requires some know of the JSON format and some programming concepts
+
+As the majority of the game assets are json files, this is really useful to know about.
+
+What this allows you to do is modify any json file without doing a file replacement.
+
+The same ideas apply as assets override, except the file will have `.patch` added to the full file name.
+
+You need to have file extensions visible in order to modify it.
+
+## Process
+
+Let's say you want to patch a file `assets/data/test.json` with this as the contents:
+
+```js
+{
+    "storage" : {
+        "level": 100,
+        "xp": 500
+    }
+}
+```
+
+Your mod is located at `assets/mods/my-mod/`
+
+You would create a file with the filepath `assets/mods/my-mod/assets/data/test.json.patch`
+
+To replace "storage.level" with 200, `test.json.patch` would look like this:
+
+```js
+{
+    "storage" : {
+        "level": 200
+    }
+}
+```
+
+To add "storage.name":
+
+```js
+{
+    "storage" : {
+        "name": "Shizuka"
+    }
+}
+```
+
+Object patching is useful for adding new properties and modifying existing ones.
+
+Weakness:
+- Inability to removal properties
+- Arrays are hard to patch
