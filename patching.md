@@ -1,4 +1,4 @@
-# What is a patching?
+# What is patching?
 
 In the scope modding, patching is changing the original game content in any way.
 
