@@ -102,3 +102,68 @@ Object patching is useful for adding new properties and modifying existing ones.
 Weakness:
 - Inability to removal properties
 - Arrays are hard to patch
+
+
+# Patch Steps
+
+Patch Steps is another way to perform json file Patching. It is more powerful than Object Patching. 
+
+The only difference between Object Patching and Patch Steps is the format of the `.patch` file. 
+
+We will be using the same sample json file used to demonstrate how Object Patching works.
+
+Location: `assets/data/test.json`
+```js
+{
+    "storage" : {
+        "level": 200
+    }
+}
+```
+
+## Appliers
+
+An Applier is a Patch Step command.
+
+
+## Patch Step Appliers
+
+```js
+```
+
+### Enter
+
+This changes the context of a patch. 
+
+```js
+[{
+    "type": "ENTER",
+    "index": ["storage"]
+}]
+```
+
+or 
+
+```js
+[{
+    "type": "ENTER",
+    "index": "storage"
+}]
+```
+
+would change the internal view of:
+```js
+{
+    "storage" : {
+        "level": 200
+    }
+}
+```
+
+to 
+
+```js
+{
+    "level": 200
+}
+```
