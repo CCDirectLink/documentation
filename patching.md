@@ -155,7 +155,10 @@ would change the internal view of:
 ```js
 {
     "storage" : {
-        "level": 200
+        "level": 200,
+        "saves": [{
+            "data": "blob"
+        }]
     }
 }
 ```
@@ -164,10 +167,41 @@ to
 
 ```js
 {
-    "level": 200
+    "level": 200,
+    "saves": [{
+        "data": "blob"
+    }]
 }
 ```
 
+
+
+```js
+[{
+    "type": "ENTER",
+    "index": ["storage", "saves", 0]
+}]
+```
+
+would change the internal view of: 
+```js
+{
+    "storage" : {
+        "level": 200,
+        "saves": [{
+            "data": "blob"
+        }]
+    }
+}
+```
+
+to 
+
+```js
+{
+    "data": "blob"
+}
+```
 
 ### Exit
 
