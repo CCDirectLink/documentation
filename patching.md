@@ -167,3 +167,70 @@ to
     "level": 200
 }
 ```
+
+
+### Exit
+
+For every `ENTER`, there should be at least one `EXIT`.
+
+`EXIT` undos an `ENTER`.
+
+```js
+[{
+    "type": "EXIT"
+}]
+```
+
+is equivalent to
+
+```js
+[{
+    "type": "EXIT",
+    "count": 1
+}]
+```
+
+
+For demonstration purposes, this is the contents of `assets/data/test.json`:
+
+```js
+{
+    "storage": {
+        "user": {
+            "name": 20
+        }
+    }
+}
+```
+
+and this is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "ENTER",
+    "index": ["storage", "user"]
+}, {
+    "type": "EXIT",
+    "count": 2
+}]
+```
+
+The first step will produce the internal result of:
+
+```js
+{
+    "name": 20
+}
+```
+
+The second step will undo the first leading to the initial state.
+
+```js
+{
+    "storage": {
+        "user": {
+            "name": 20
+        }
+    }
+}
+```
