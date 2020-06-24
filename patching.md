@@ -912,3 +912,42 @@ This is the result:
         }
     }
 }
+```
+
+### Debug
+
+```js
+[{
+    "type": "DEBUG",
+    "value": true
+}, {
+    "type": "DEBUG",
+    "value": false
+}]
+```
+
+
+This PatchStep turns Debug Mode on or off.
+
+
+### Comment
+
+Debug mode must be on for this PatchStep to work.
+
+```js
+[{
+	"type": "DEBUG",
+	"value": true
+},{
+    "type": "COMMENT",
+    "value": "This is a comment"
+}, {
+    "type": "COMMENT",
+    "value": {
+        "data": 3
+    }
+}]
+```
+
+This will first display `This is a comment` in the DevTools console.
+It will then display `{data: 3}`.
