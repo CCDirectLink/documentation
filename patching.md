@@ -411,3 +411,162 @@ The last step will revert the value of focus to the initial object:
 ```
 
 ### Import
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "a": {
+        "b": 2
+    }
+}
+```
+
+This is the contents of `assets/data/test2.json`:
+
+```js
+{
+    "b": {
+        "a": 2
+    },
+    "c": {
+        "a": 3
+    },
+    "d": 4
+}
+```
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "IMPORT",
+    "src": "data/test2.json"
+}]
+```
+
+This is equivalent to:
+
+```js
+[{
+    "type": "IMPORT",
+    "src": "game:data/test2.json"
+}]
+```
+
+The first step would load `assets/data/test2.json` then merge it with the current value resulting in this:
+
+```js
+{
+    "a": {
+        "b": 2
+    },
+    "b": {
+        "a": 2
+    },
+    ,
+    "c": {
+        "a": 3
+    },
+    "d": 4
+}
+```
+
+
+If `assets/data/test2.json` had patches associated with it, it would be applied before being merged.
+
+Another feature is loading json files inside the mod directory and merging. 
+No patches to the loaded file will be done if `mod:` is specified.
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "a": {
+        "b": 2
+    }
+}
+```
+
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "IMPORT",
+    "src": "mod:patches/data/test.json",
+    "path": ["1", "2", "3"],
+    "index": "y"
+}]
+```
+
+This is the contents of `assets/mods/my-mod/patches/data/test.json`:
+
+```js
+{
+    "1": {
+        "2": {
+            "3": 4
+        }
+    }
+}
+```
+
+
+First it will load `assets/mods/my-mod/patches/data/test.json`.
+
+Then it will walk the path specified.
+
+Initial loaded file internal representation:
+
+```js
+{
+    "1": {
+        "2": {
+            "3": 4
+        }
+    }
+}
+```
+
+After entering "1":
+
+```js
+{
+    "2": {
+        "3": 4
+    }
+}
+```
+
+After entering "2":
+
+```js
+{
+    "3": 4
+}
+```
+
+After entering "3":
+
+```js
+4
+```
+
+Finally, it will add a key "y" with the value that resulted from the path walk (4).
+
+So the overall result will be:
+
+```js
+{
+    "a": {
+        "b": 2
+    },
+    "y": 4
+}
+```
+
+Note: "index" and "path" options are optional. 
+
+### Include
+
