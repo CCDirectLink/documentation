@@ -800,3 +800,115 @@ This results in:
 }
 ```
 
+### Copy
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "a": 2,
+    "b": [3],
+    "c": {
+        "d": 4
+    }
+}
+```
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "FOR_IN",
+    "keyword": "__VAR__",
+    "values": ["a", "b", "c"],
+    "body": [{
+        "type": "ENTER",
+        "index": "__VAR__"
+    },{
+        "type": "COPY",
+        "alias": "alias-__VAR__",
+    }, {
+        "type": "EXIT"
+    }]
+}]
+```
+
+Nothing will change. All this will do is create an internal key-value storage that looks like this:
+
+{
+    "alias-a": 2,
+    "alias-b": [3],
+    "alias-c": {
+        "d": 4
+    }
+}
+
+
+### PASTE
+
+This command relies on COPY. 
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "a": 2,
+    "b": [3],
+    "c": {
+        "d": 4
+    }
+}
+```
+
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "FOR_IN",
+    "keyword": "__VAR__",
+    "values": ["a", "b", "c"],
+    "body": [{
+        "type": "ENTER",
+        "index": "__VAR__"
+    },{
+        "type": "COPY",
+        "alias": "alias-__VAR__"
+    },{
+        "type": "EXIT"
+    },{
+        "type": "SET_KEY",
+        "index": "__VAR__"
+    }]
+}, {
+    "type": "SET_KEY",
+    "index": "saved",
+    "content": {}
+}, {
+    "type": "ENTER",
+    "index": "saved"
+}, {
+    "type": "FOR_IN",
+    "keyword": "__VAR__",
+    "values": ["a", "b", "c"],
+    "body": [{
+        "type": "PASTE",
+        "alias": "alias-__VAR__",
+		"index": "__VAR__"
+    }]
+}]
+```
+
+
+This is the result:
+
+```js
+{
+    "saved": {
+        "a": 2,
+        "b": [3],
+        "c": {
+            "d": 4
+        }
+    }
+}
