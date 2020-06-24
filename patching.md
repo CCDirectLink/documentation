@@ -724,3 +724,79 @@ This results in:
 
 Think of PatchStep files as its own room. What include does is generate a new room to perform some special operation.
 Rooms do not intefere with each other, they just modify the data. 
+
+### FOR_IN
+
+This PatchStep is useful for combining repeated set of PatchSteps with only slightly variations in input.
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{}
+```
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "FOR_IN",
+    "keyword": "__INDEX__",
+    "values": [1,2,3,4],
+    "body": [{
+        "type": "SET_KEY",
+        "index": "__INDEX__-id",
+        "content": "__INDEX__"
+    }]
+}]
+```
+
+This results in:
+
+```js
+{
+    "1-id": "1",
+    "2-id": "2",
+    "3-id": "3",
+    "4-id": "4"
+}
+```
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{}
+```
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "FOR_IN",
+    "keyword": {
+        "name": "__NAME__",
+        "id": "__ID__"
+	},
+    "values": [{
+        "name": "Bob",
+        "id": 1
+    },{
+        "name": "Joe",
+        "id": 2
+    }],
+    "body": [{
+        "type": "SET_KEY",
+        "index": "__NAME__",
+        "content": "__ID__"
+    }]
+}]
+```
+
+This results in:
+
+```js
+{
+    "Bob": "1",
+    "Joe": "2"
+}
+```
+
