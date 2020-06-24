@@ -268,3 +268,146 @@ The second step will undo the first leading to the initial state.
     }
 }
 ```
+
+
+### INIT_KEY
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "storage": {
+        "user": {
+            "name": 20
+        }
+    }
+}
+```
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "INIT_KEY",
+    "index": "storage",
+    "content": {
+        "a": 2
+    }
+}]
+```
+
+Nothing will change to the data because "storage" already exists.
+
+Changing `assets/mods/my-mod/assets/data/test.json.patch` to:
+
+```js
+[{
+    "type": "INIT_KEY",
+    "index": "storage2",
+    "content": {
+        "a": 2
+    }
+}]
+```
+
+would result in:
+
+
+```js
+{
+    "storage": {
+        "user": {
+            "name": 20
+        }
+    },
+    "storage2": {
+        "a": 2
+    }
+}
+```
+
+### REMOVE_ARRAY_ELEMENT
+
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "a": [1,2,3]
+}
+```
+
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "REMOVE_ARRAY_ELEMENT",
+    "index": 0
+}]
+```
+
+Applying the patch will result in this:
+
+```js
+{
+    "a": [2,3]
+}
+```
+
+### ADD_ARRAY_ELEMENT
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "a": [1,2,3]
+}
+```
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "ENTER",
+    "index": "a"
+},{
+    "type": "ADD_ARRAY_ELEMENT",
+    "content": 4
+}, {
+    "type": "ADD_ARRAY_ELEMENT",
+    "index": 0,
+    "content": 0
+}, {
+    "type": "EXIT"
+}]
+```
+
+
+After the first step, the internal state will be:
+
+```js
+[1,2,3]
+```
+
+After the second step, the number 4 will be pushed to the end of the array:
+
+```js
+[1,2,3,4]
+```
+
+After the third step, the number 0 will be added to the start of the array:
+
+```js
+[0,1,2,3,4]
+```
+
+The last step will revert the value of focus to the initial object:
+
+```js
+{
+    "a": [0,1,2,3,4]
+}
+```
+
+### Import
