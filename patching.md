@@ -570,3 +570,98 @@ Note: "index" and "path" options are optional.
 
 ### Include
 
+The purpose of `INCLUDE` is to allow external Object Patching or PatchSteps to be performed. 
+
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "a": {
+        "b": 2
+    }
+}
+```
+
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "INCLUDE",
+    "src": "mod:patches/data/test.json",
+}]
+```
+
+This is the contents of `assets/mods/my-mod/patches/data/test.json`:
+
+```js
+{
+    "1": {
+        "2": {
+            "3": 4
+        }
+    }
+}
+```
+
+This is like setting the contents of `assets/mods/my-mod/assets/data/test.json.patch` to:
+
+```js
+{
+    "1": {
+        "2": {
+            "3": 4
+        }
+    }
+}
+```
+
+However, `INCLUDE` is used as an organization method.
+
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "a": {
+        "b": 2
+    }
+}
+```
+
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "INCLUDE",
+    "src": "mod:patches/data/test.json",
+}, {
+    "type": "SET_KEY",
+    "index": "b",
+    "content": [1,2,3]
+}]
+```
+
+This is the contents of `assets/mods/my-mod/patches/data/test.json`:
+
+```js
+[{
+    "type": "ENTER",
+    "index": ["a"]
+}]
+```
+
+This results in:
+```js
+{
+    "a": {
+        "b": 2
+    },
+    "b": [1,2,3]
+}
+```
+
+Think of PatchStep files as its own room. What include does is generate a new room to perform some special operation.
+Rooms do not intefere with each other, they just modify the data. 
