@@ -269,6 +269,65 @@ The second step will undo the first leading to the initial state.
 }
 ```
 
+### SET_KEY
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "storage": {
+        "user": {
+            "name": 20
+        }
+    }
+}
+```
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "SET_KEY",
+    "index": "storage"
+}]
+```
+
+This is the result:
+```js
+{}
+```
+
+
+
+This is the contents of `assets/data/test.json`:
+
+```js
+{
+    "storage": {
+        "user": {
+            "name": 20
+        }
+    }
+}
+```
+
+
+This is the contents of `assets/mods/my-mod/assets/data/test.json.patch`:
+
+```js
+[{
+    "type": "SET_KEY",
+    "index": "storage",
+    "content": 2
+}]
+```
+
+This is the result:
+```js
+{
+    "storage": 2
+}
+```
 
 ### INIT_KEY
 
