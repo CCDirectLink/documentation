@@ -37,7 +37,7 @@ Finally, add the file you want to replace (your own `lea.png`).
 
 It should end up looking something like this.
 
-![Image](/assets/images/patching/faceless-mod-path-example.png?raw=true)
+![Image](/assets/patching/images/faceless-mod-path-example.png?raw=true)
 
 ![Image](/assets/patching/images/faceless-mod-folder-contents-example.png?raw=true)
 
