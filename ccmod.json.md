@@ -310,7 +310,7 @@ with localization:
 }
 ```
 
-The locale names are usually strings in the format <language>_<territory>. Here are the locales provided by CrossCode:
+The locale names are usually strings in the format `<language>_<territory>`. Here are the locales provided by CrossCode:
 
 * `en_US` - American English (the default locale)
 * `de_DE` - German
@@ -318,6 +318,7 @@ The locale names are usually strings in the format <language>_<territory>. Here 
 * `ko_KR` - Korean
 * `zh_CN` - Simplified Chinese
 * `zh_TW` - Traditional Chinese
+
 It should be noted what I mean by "the default locale": when a translation for locale selected by the user isn't specified, the translation for `en_US` will be chosen instead, so it's recommended to provide at least the English variant of all localized strings. It is also assumed that when a plain string is used instead of a dictionary, this string contains text for the `en_US` locale. In other words using plain strings is equivalent to writing { "en_US": "<text>" }.
 
 You are not limited to just the locales listed above, however. You can specify translation for any locale, and depending on the platform which processes the manifest, more locales can be viewed, e.g. the mod portal can easily support more languages. Plus, there are translation mods for CrossCode, so, e.g. `fr_FR` (French) and `ru_RU` (Russian) can be viewed as well. Be careful when using locale-specific characters though: text rendering in CC is very simple and the bitmap fonts don't support every Unicode character out there.
